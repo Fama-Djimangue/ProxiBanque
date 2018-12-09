@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+layout:decorator="template1">
+<head>
+<meta charset="utf-8"/>
+<title>ProxiBanque</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+<div class="col-md-6">
+
+
+<div class="panel panel-default">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Consultation d'un compte</div>
+<div class="panel-body">
+<form th:action="@{/consultercompte}" method="get">
+<div>
+<label>Numero compte :</label>
+<input type="text" name="codeCompte"/>
+<button type="submit" style="background-color: #9899">OK</button>
+</div>
+<div class="text-danger" th:if="${error}" th:unless="!${codeCompte}" th:text="${error.message}"></div>
+</form>
+
+
+</div>
+
+</div>
+
+
+
+<div class="panel panel-default" th:if="${compte}">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Informations sur le compte</div>
+<div class="panel-body">
+<div>
+<label>Nom Client :</label>
+<label th:text="${compte.client.nomClient}"></label>
+</div>
+<div>
+<label>Code :</label>
+<label th:text="${compte.numeroCompte}"></label>
+</div>
+<div>
+<label>Solde :</label>
+<label th:text="${compte.solde}"></label>
+</div>
+<div>
+<label>Type Compte :</label>
+<label th:text="${compte.class.simpleName}"></label>
+</div>
+<div>
+<label>Date Création :</label>
+<label th:text="${compte.dateCreation}"></label>
+</div>
+<div th:if="${compte.class.simpleName=='CompteCourant'}">
+<label>Découvert :</label>
+<label th:text="${compte.decouvert}"></label>
+</div>
+<div th:if="${compte.class.simpleName=='CompteEpargne'}">
+<label>Taux :</label>
+<label th:text="${compte.taux}"></label>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="col-md-6" >
+
+<div class="panel panel-default"  th:if="${compte} ">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Opération sur le compte</div>
+<div class="panel-body">
+<form th:action="@{/saveoperation}" method="post">
+<div>
+<label>Compte :</label>
+<input type="hidden" name="codeCompte" th:value="${codeCompte}" class="form-control"/>
+<label th:text="${codeCompte}"></label>
+</div>
+<div>
+<input type="radio" name="typeOperation" value="Versement" checked="checked"  onchange="document.getElementById('forvirement').style.display='none'"/><label>Versement</label>
+<input type="radio" name="typeOperation" value="Retrait" onchange="document.getElementById('forvirement').style.display='none'"/><label>Retrait</label>
+<input type="radio" name="typeOperation" value="Virement"  onchange="document.getElementById('forvirement').style.display='block'"/><label>Virement</label>
+</div>
+<div id="forvirement" style="display:none">
+<label>Vers le compte :</label>
+<input type="text" name="codeCompte2" class="form-control"/>
+</div>
+<div>
+<label>Montant :</label>
+<input type="number" name="montant" class="form-control" required="required"/>
+</div>
+<div class="text-danger"   th:text="${#httpServletRequest.getParameter('error')}"></div>
+<button type="submit" style="background-color: #9899">Save</button>
+</form>
+
+</div>
+
+</div>
+
+<div class="panel panel-default"   th:if="${compte}">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Liste des opérations</div>
+<div class="panel-body">
+<table class="table table-striped">
+<tr>
+<th>Num</th><th>Type</th><th>Date</th><th>Montant</th>
+</tr>
+<tr th:each="o:${listeOperation}">
+<td th:text="${o.numeroOperation}"></td>
+<td th:text="${o.typeOperation}"></td>
+<td th:text="${o.dateOperation}"></td>
+<td th:text="${o.montant}"></td>
+</tr>
+</table>
+<div class="container" style="color: black;">
+<ul class="nav nav-pills">
+<li th:each="p, status:${pages}">
+<a th:href="@{/consultercompte(codeCompte=${codeCompte}, page=${status.index})}" th:text="${status.index}"></a>
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8"/>
+<title>ProxiBanque</title>
+ <link rel="stylesheet" type="text/css"  href="../static/css/bootstrap.min.css"
+ th:href="@{/css/bootstrap.min.css}"/> 
+ <link rel="stylesheet" type="text/css"  href="../static/css/style.css"
+ th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+
+&nbsp;&nbsp;<span th:text="${prenom}" ></span> <span th:text="${nom}"/>
+<div style="color: #a70303;font-weight:bold;" class="nav navbar-nav navbar-left" th:text="${roles}">Connecté en tant que </div>
+<div class="navbar navbar-inverse">
+<div class="container-fluid">
+<ul class="nav navbar-nav">
+<li><a th:href="@{/consulteremploye}" th:if="${roles == 'Gerant'}"> Liste des conseillers</a></li>
+<li><a th:href="@{/clients}">Liste des clients</a></li>
+<li><a th:href="@{/consultercompte}">Opérations Compte</a></li>
+
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li><a th:href="@{/login?logout}">Logout </a></li>
+</ul>
+</div>
+</div>
+
+</header>
+
+<section layout:fragment="content"></section>
+
+<footer>
+<span style="color: #fff; align:left;font-weight: bold;">@ Adresse ProxiBanque</span>
+</footer>
+</body>
+</html>

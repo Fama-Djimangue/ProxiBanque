@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+layout:decorator="template1">
+<head>
+<meta charset="utf-8"/>
+<title>ProxiBanque</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+<div class="col-md-4">
+
+<div class="panel panel-default">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Informations sur le client</div>
+<div class="panel-body">
+<div>
+<label>Nom Client :</label>
+<label th:text="${client.nomClient}"></label>
+</div>
+<div>
+<label>Adresse Client :</label>
+<label th:text="${client.adresseClient}"></label>
+</div>
+<div>
+<label>Profession client :</label>
+<label th:text="${client.professionClient}"></label>
+</div>
+<div>
+<label>Email Client :</label>
+<label th:text="${client.emailClient}"></label>
+</div>
+<div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-md-12">
+<div class="panel panel-default">
+<div  style="border: 1px solid #205421">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Liste Compte (s)</div>
+<div class="panel-body">
+
+<table class="table table-bordered table-striped">
+<tr>
+	<th>Numéro</th>
+	<th>Solde</th>
+	<th>Date Ouverture</th>
+	<th>Type</th>
+	<th>Taux</th>
+	<th>Découvert</th>
+	<th>Opération</th>
+</tr>
+<tr th:each="c:${liste}">
+<td th:text="${c.numeroCompte}"></td>
+<td th:text="${c.solde}"></td>
+<td th:text="${c.dateCreation}"></td>
+<td th:text="${c.class.simpleName}"></td>
+<td> 
+<span th:if="${c.class.simpleName=='CompteEpargne'}" th:text="${c.taux}"/>
+<span th:if="!${c.class.simpleName=='CompteEpargne'}" th:text="${' '}"/>
+</td>
+<td>
+<span th:if="${c.class.simpleName=='CompteCourant'}" th:text="${c.decouvert}"/>
+<span th:if="!${c.class.simpleName=='CompteCourant'}" th:text="${''}"/>
+</td>
+<td>
+<a th:href="@{infocompte(codeCompte=${c.numeroCompte})}">
+											<button type="button" class="btn btn-default btn-sm"
+												title="Effectuer une opération">
+										    <span class="label label-success">Consulter</span>
+											</button>
+</a>
+</td>
+
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

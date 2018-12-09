@@ -1,0 +1,56 @@
+.spacer40{
+	margin-top:40px;
+}
+.red{
+	color:red;
+}
+ .navbar-inverse {
+ background-color:#205421;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #fff;
+    font-weight:bold;
+}   
+
+fieldset 
+	{
+		border: 1px solid #ddd !important;		 
+		margin: 14px;
+	   	border-radius:4px;
+		padding-left:10px!important;
+	}	
+	
+		legend
+		{
+			font-size:12px;
+			font-weight:bold;
+			margin-bottom: 0px; 
+			border: 1px solid #ddd;
+			border-radius: 4px; 
+			padding: 5px 5px 5px 10px; 
+			background-color: #ffffff;
+	}
+	
+	button {
+	 background-color:#8FBC8F; 
+	 font-size:1.4em; 
+	 width: 100px; 
+	 color:#000;
+}
+select{
+	margin: 14px;
+}
+
+.well {
+  background-color:#CCC;
+  padding: 20px;
+}
+.well legend{
+  font-size: 1em;
+ font-weight: bold;
+ padding-bottom: 20px;
+}
+
+
+footer {position: fixed; bottom: 0;background-color: #a70303;width: 7024px; line-height: 15px;}

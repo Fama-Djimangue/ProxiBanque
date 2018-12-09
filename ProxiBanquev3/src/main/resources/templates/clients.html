@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="template1">
+<head>
+<meta charset="utf-8" />
+<title>ProxiBanque</title>
+</head>
+<body>
+
+
+	<div layout:fragment="content">
+
+		<div class="col-md-12" th:if="!${codeClient}">
+			<div style="border: 1px solid #205421">
+				<div class="panel-heading"
+					style="background-color: #ccc; padding: 6px; color: #000;">Ajouter
+					un client / Ouverture d'un compte</div>
+				<div class="panel-body spacer">
+					<p th:if="${conf=='true'}">
+						<strong style="color: red">Enregistrement faite avec
+							succés !!!</strong>
+					</p>
+					<p th:if="${mod=='true'}">
+						<strong style="color: red">Modification faite avec succés
+							!!!</strong>
+					</p>
+					<form th:action="@{/saveclient}" method="post">
+						<div class="container">
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le prenom et le nom du client"
+											name="nomClient" type="text" />
+									</div>
+									<div class="form-group">
+										<input class="form-control" placeholder="Profession du client"
+											name="professionClient" type="text" />
+									</div>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer l'adresse du client" name="adresseClient"
+											type="text" />
+									</div>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer l'email du client" name="emailClient"
+											type="email" />
+									</div>
+
+								</div>
+
+								<div class="col-lg-4">
+									<legend> Ouvrir un Compte pour le client</legend>
+									<div class="well">
+										<fieldset>
+											<div class="checkbox">
+												<label> <input type="checkbox" id="type"
+													name="typeEpargne" value="EPARGNE" /> Type Epargne
+												</label>
+											</div>
+											<div class="checkbox">
+												<label> <input type="checkbox" id="type"
+													name="typeCourant" value="COURANT" /> Type Courant
+												</label>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<button type="submit" style="background-color: #9899">Valider</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+		<div></div>
+
+
+		<div class="col-md-12" th:if="${codeClient}">
+			<div style="border: 1px solid #205421">
+				<div class="panel-heading"
+					style="background-color: #ccc; padding: 6px; color: #000;">Modification
+					Client</div>
+				<div class="panel-body spacer">
+					<form th:action="@{updateclient}" method="post"
+						th:object="${client}">
+						<input type="hidden" name="codeClient" th:value="*{codeClient}"
+							class="form-control" />
+						<div class="container">
+
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le prenom et le nom du client"
+											name="nomClient" th:value="*{nomClient}" type="text" />
+									</div>
+									<div class="form-group">
+										<input class="form-control" placeholder="Profession du client"
+											name="emailClient" th:value="*{professionClient}" type="text" />
+
+									</div>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer l'adresse du client" name="adresseClient"
+											th:value="*{adresseClient}" type="text" />
+									</div>
+									<div class="form-group">
+										<input class="form-control" placeholder="Email du client"
+											name="professionClient" th:value="*{emailClient}"
+											type="email" />
+									</div>
+
+								</div>
+
+
+								<div class="col-lg-4">
+									<legend> Ouvrir un Compte pour le client</legend>
+									<div class="well">
+										<small th:if="${deuxcpte}"><em>Ce client a déja
+												deux comptes</em></small>
+										<p th:each="c:${cpteduclient}">
+											<!--  <small th:text="${c.numeroCompte}"></small>-->
+											<small th:if="${cpteC}"><em>Ce client a deja un
+													Compte Courant, si vous voulez lui creé un autre compte</em></small> <small
+												th:if="${cpteE}"><em>Ce client a deja un Compte
+													Epargne, si vous voulez lui creé une autre compte</em></small>
+										</p>
+										<fieldset>
+											<div class="checkbox" th:if="${cpteC}">
+												<label> <input type="checkbox" id="type"
+													name="typeEpargne" value="EPARGNE" /> Type Epargne
+												</label>
+											</div>
+											<div class="checkbox" th:if="${cpteE}">
+												<label> <input type="checkbox" id="type"
+													name="typeCourant" value="COURANT" /> Type Courant
+												</label>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<button type="submit" style="background-color: #9899">Valider</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+		<div></div>
+
+		<div class="col-md-12">
+			<br /> <br />
+			<div style="border: 1px solid #205421">
+				<div class="panel-heading"
+					style="background-color: #ccc; padding: 6px; color: #000; align: center;">La
+					liste des clients</div>
+
+				<div class="panel-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>CodeCli</th>
+							<th>Nom Prenom</th>
+							<th>Adresse</th>
+							<th>Profession</th>
+							<th>Email</th>
+							<th>Action</th>
+						</tr>
+						<tr th:each="c:${liste}">
+							<td th:text="${c.codeClient}"></td>
+							<td th:text="${c.nomClient}"></td>
+							<td th:text="${c.adresseClient}"></td>
+							<td th:text="${c.professionClient}"></td>
+							<td th:text="${c.emailClient}"></td>
+							<td><a th:href="@{editer(idclient=${c.codeClient})}">
+									<button type="button" class="btn btn-default btn-sm"
+										title="Modifier">
+										<span class="label label-default">Edit</span>
+									</button>
+							</a> <a th:href="@{listecompte(idclient=${c.codeClient})}">
+									<button type="button" class="btn btn-default btn-sm"
+										title="Compte client">
+										<span class="label label-success">Liste Compte</span>
+									</button>
+							</a></td>
+
+						</tr>
+					</table>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+
+	</div>
+
+
+
+
+
+
+</body>
+</html>

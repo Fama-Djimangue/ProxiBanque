@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="template1">
+<head>
+<meta charset="utf-8" />
+<title>ProxiBanque</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="col-md-12" th:if="!${codeEmployer}">
+			<div style="border: 1px solid #205421">
+				<div class="panel-heading"
+					style="background-color: #ccc; padding: 6px; color: #000;">Ajouter
+					un conseiller</div>
+				<div class="panel-body spacer">
+					<p th:if="${conf=='true'}">
+						<strong style="color: red">Enregistrement faite avec
+							succés !!!</strong>
+					</p>
+					<p th:if="${mod=='true'}">
+						<strong style="color: red">Modification faite avec succés
+							!!!</strong>
+					</p>
+					<form th:action="@{/saveconseiller}" method="post">
+						<div class="container">
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le nom du conseiller" name="nomEmployer"
+											type="text" required="required" />
+									</div>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le prenom du conseiller"
+											name="prenomEmployer" type="text" required="required" />
+									</div>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer l'email du conseiller"
+											name="emailEmployer" type="email" required="required" />
+									</div>
+
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le téléphone du conseiller"
+											name="telEmployer" type="number" required="required" />
+									</div>
+
+								</div>
+
+								<div class="col-lg-4">
+									<legend> Information de connexion du Conseiller</legend>
+									<div class="well">
+										<fieldset>
+											<div class="form-group">
+												<input class="form-control"
+													placeholder="Entrer le login du conseiller" name="username"
+													type="text" required="required" />
+											</div>
+											<div class="form-group">
+												<input class="form-control"
+													placeholder="Entrer le password du conseiller"
+													name="password" type="password" required="required" />
+											</div>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<button type="submit" style="background-color: #9899">Valider</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+		<div></div>
+
+
+		<div></div>
+
+
+		<div class="col-md-12" th:if="${codeEmployer}">
+			<div style="border: 1px solid #205421">
+				<div class="panel-heading"
+					style="background-color: #ccc; padding: 6px; color: #000;">Modification
+					Conseiller</div>
+				<div class="panel-body spacer">
+
+					<form th:action="@{updateemploye}" method="post"
+						th:object="${employe}">
+
+						<div class="container">
+							<input type="hidden" name="codeEmployer"
+								th:value="*{codeEmployer}" class="form-control" />
+							<div class="row">
+
+								<strong style="color: red" th:if="${modif == 'true'}">Modification
+									faite avec succés !!!</strong>
+
+								<div class="col-lg-8">
+
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le nom du conseiller" name="nomEmployer"
+											th:value="*{nomEmployer}" type="text" />
+									</div>
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le prenom du conseiller"
+											name="prenomEmployer" th:value="*{prenomEmployer}"
+											type="text" />
+									</div>
+
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer l'email du conseiller"
+											name="emailEmployer" th:value="*{emailEmployer}" type="email" />
+									</div>
+
+									<div class="form-group">
+										<input class="form-control"
+											placeholder="Entrer le téléphone du conseiller"
+											name="telEmployer" th:value="*{telEmployer}" type="number" />
+									</div>
+
+								</div>
+
+								<div class="col-lg-4">
+									<legend> Information de connexion du Conseiller</legend>
+									<div class="well">
+										<fieldset>
+											<div class="form-group">
+												<input class="form-control"
+													placeholder="Entrer le login du conseiller" name="username"
+													th:value="*{user}" type="text" />
+											</div>
+											<div class="form-group">
+												<input class="form-control"
+													placeholder="Entrer le password du conseiller"
+													name="password" type="password" required="required" />
+											</div>
+
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div style="text-align: center;">
+							<button type="submit" style="background-color: #9899">Valider</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+		<div></div>
+
+
+		<div></div>
+
+		<div class="col-md-12">
+			<br /> <br />
+			<div style="border: 1px solid #205421">
+				<div class="panel-heading"
+					style="background-color: #ccc; padding: 6px; color: #000; align: center;">La
+					liste des employes</div>
+
+				<div class="panel-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>CodeEmp</th>
+							<th>Nom</th>
+							<th>Prenom</th>
+							<th>Email</th>
+							<th>Téléphone</th>
+							<th>Login</th>
+							<th>Action</th>
+						</tr>
+						<tr th:each="e:${liste}">
+							<td th:text="${e.codeEmployer}"></td>
+							<td th:text="${e.nomEmployer} "></td>
+							<td th:text="${e.prenomEmployer}"></td>
+							<td th:text="${e.emailEmployer}"></td>
+							<td th:text="${e.telEmployer}"></td>
+							<td th:text="${e.user}"></td>
+							<td><a th:href="@{editeremp(idemp=${e.codeEmployer})}">
+									<button type="button" class="btn btn-default btn-sm"
+										title="Modifier">
+										<span class="label label-default">Edit</span>
+									</button>
+							</a> <a th:href="@{deleteemp(idemp=${e.codeEmployer})}">
+									<button type="button" class="btn btn-default btn-sm"
+										title="Supprimer">
+										<span class="label label-danger">Delete</span>
+									</button>
+							</a>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+
+	</div>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">			
+				<h4 class="modal-title">Confirmation</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete your account? This action cannot be undone and you will be unable to recover any data.</p>
+			</div>
+			<div class="modal-footer">
+                <a href="#" class="btn btn-info" data-dismiss="modal">Cancel</a>
+				<a href="#" class="btn btn-danger">Yes, delete it!</a>
+			</div>
+		</div>
+	</div>
+</div>   
+
+</body>
+</html>

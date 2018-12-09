@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+layout:decorator="template1">
+<head>
+<meta charset="utf-8"/>
+<title>ProxiBanque</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+<div class="col-md-4">
+
+<div class="panel panel-default" th:if="${compte}">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Informations sur le compte</div>
+<div class="panel-body">
+<div>
+<label>Nom Client :</label>
+<label th:text="${compte.client.nomClient}"></label>
+</div>
+<div>
+<label>Code :</label>
+<label th:text="${compte.numeroCompte}"></label>
+</div>
+<div>
+<label>Solde :</label>
+<label th:text="${compte.solde}"></label>
+</div>
+<div>
+<label>Type Compte :</label>
+<label th:text="${compte.class.simpleName}"></label>
+</div>
+<div>
+<label>Date Création :</label>
+<label th:text="${compte.dateCreation}"></label>
+</div>
+<div th:if="${compte.class.simpleName=='CompteCourant'}">
+<label>Découvert :</label>
+<label th:text="${compte.decouvert}"></label>
+</div>
+<div th:if="${compte.class.simpleName=='CompteEpargne'}">
+<label>Taux :</label>
+<label th:text="${compte.taux}"></label>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="col-md-12" >
+<div class="panel panel-default"   th:if="${compte}">
+<div class="panel-heading" style="background-color: #ccc; padding: 6px; color:#000;align:center;">Liste des opérations du compte</div>
+<div class="panel-body">
+<table class="table table-striped">
+<tr>
+<th>Num</th><th>Type</th><th>Date</th><th>Montant</th>
+</tr>
+<tr th:each="o:${listeOperation}">
+<td th:text="${o.numeroOperation}"></td>
+<td th:text="${o.typeOperation}"></td>
+<td th:text="${o.dateOperation}"></td>
+<td th:text="${o.montant}"></td>
+</tr>
+</table>
+<div class="container" style="color: black;">
+<ul class="nav nav-pills">
+<li th:each="p, status:${pages}">
+<a th:href="@{/consultercompte(codeCompte=${codeCompte}, page=${status.index})}" th:text="${status.index}"></a>
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+
+</body>
+</html>

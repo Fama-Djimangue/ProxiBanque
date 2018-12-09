@@ -1,0 +1,7 @@
+sn.objis.proxibanque.dao
+sn.objis.proxibanque.domaine
+sn.objis.proxibanque.presentation
+sn.objis.proxibanque.presentation.modele
+sn.objis.proxibanque.presentation.verification
+sn.objis.proxibanque.services
+sn.objis.proxibanque.utils

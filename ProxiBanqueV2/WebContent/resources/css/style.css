@@ -1,0 +1,82 @@
+ /* Remove the navbar's default margin-bottom and rounded borders */ 
+ 
+ .top-nav .titre {
+    display: inline-block;
+    color: #fff;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 20px;
+   font-size: 50px; 
+    font-weight: bold;
+}
+ 
+ .container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    height:1000px;
+}
+ 
+ .top-nav>li>a:hover,
+.top-nav>li>a:focus,
+.top-nav>.open>a,
+.top-nav>.open>a:hover,
+.top-nav>.open>a:focus {
+    color: #fff;
+    background-color: #205421;
+}
+
+.top-nav>li>a.active{
+	color: #fff;
+    background-color: #205421;;
+}
+ 
+ .top-nav>li {
+    display: inline-block;
+    float: left;
+    color: #fff;
+}
+
+.top-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 20px;
+    color: #fff;
+   background-color: #205421;
+}
+ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: #fff;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 650px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 120px;
+      background-color: #f1f1f1;
+      with: auto;
+      height: auto;
+      }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #ccc;
+      color: #205421;
+      padding: 10px;
+      font-weight: bold;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }

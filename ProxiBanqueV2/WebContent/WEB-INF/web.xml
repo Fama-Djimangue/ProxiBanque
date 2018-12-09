@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>ProxiBanqueV2</display-name>
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+  <security-constraint>
+    <display-name>Authentification du SuperAdmin du Système</display-name>
+    <web-resource-collection>
+      <web-resource-name>Page jsp Securises</web-resource-name>
+      <url-pattern>/admin/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>SuperAdmin</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <display-name>Authentification du Gérant de la banque</display-name>
+    <web-resource-collection>
+      <web-resource-name>Page jsp Securises</web-resource-name>
+      <url-pattern>/gerant/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>GAG</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <display-name>Authentification du conseiller de la banque</display-name>
+    <web-resource-collection>
+      <web-resource-name>Page jsp Securises</web-resource-name>
+      <url-pattern>/conseiller/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>CCL</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-role>
+    <description>Avoir le role SuperAdmin</description>
+    <role-name>SuperAdmin</role-name>
+  </security-role>
+  <security-role>
+    <description>Gerant de l'agence</description>
+    <role-name>GAG</role-name>
+  </security-role>
+  <security-role>
+    <description>Conseiller de l'agence</description>
+    <role-name>CCL</role-name>
+  </security-role>
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>Espace utilisateur</realm-name>
+    <form-login-config>
+      <form-login-page>/login.jsp</form-login-page>
+      <form-error-page>/error.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/test</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  
+  <!-- Configuration du listener -->
+    <context-param>
+    <param-name>DBUSER</param-name>
+    <param-value>root</param-value>
+  </context-param>
+  <context-param>
+    <param-name>DBPWD</param-name>
+    <param-value></param-value>
+  </context-param>
+  <context-param>
+    <param-name>DBURL</param-name>
+    <param-value>jdbc:mysql://localhost:3306/proxibanquev2</param-value>
+  </context-param>
+    <context-param>
+    <param-name>DBDRIVE</param-name>
+    <param-value>com.mysql.jdbc.Driver</param-value>
+  </context-param>
+  
+</web-app>
